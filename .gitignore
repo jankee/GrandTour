@@ -1,0 +1,41 @@
+# =============== #
+# Unity generated #
+# =============== #
+<<<<<<< HEAD
+GrandTour/Temp/
+GrandTour/Library/
+GrandTour/obj/
+=======
+GrandTure/Temp/
+GrandTure/Library/
+GrandTure/obj/
+>>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+<<<<<<< HEAD
+GrandTour/*.csproj
+*.pidb
+*.suo
+GrandTour/*.sln
+=======
+GrandTure/*.csproj
+*.pidb
+*.suo
+GrandTure/*.sln
+>>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
+*.user
+*.unityproj
+*.booproj
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
