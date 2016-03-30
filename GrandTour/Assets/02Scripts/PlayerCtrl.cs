@@ -49,34 +49,55 @@ public class PlayerCtrl : MonoBehaviour
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
 
-        Vector3 moveDir = (Vector3.forward * v) + (Vector3.right * h);
+        //Vector3 moveDir = (Vector3.forward * v) + (Vector3.right * h);
 
-        //Translate(이동방향 * 속도 * 변위값 * Time.deltaTime. 기준좌표(로컬좌표))
-        tr.Translate(moveDir.normalized * moveSpeed * Time.deltaTime, Space.Self);
+        ////Translate(이동방향 * 속도 * 변위값 * Time.deltaTime. 기준좌표(로컬좌표))
+        //tr.Translate(moveDir.normalized * moveSpeed * Time.deltaTime, Space.Self);
 
-        tr.Rotate(Vector3.up * Time.deltaTime * rotSpeed * Input.GetAxis("MouseX"));
+        //tr.Rotate(Vector3.up * Time.deltaTime * rotSpeed * Input.GetAxis("MouseX"));
 
         //키보드 입력값을 기준으로 애니메이션 실행
-        if (v >= 0.1f)
+        //if (v >= 0.1f)
+        //{
+        //    //_animation.clip = anim.runForward;
+        //    _animation.CrossFade(anim.runForward.name, 0.3f);
+        //}
+        //else if (v <= -0.1f)
+        //{
+        //    _animation.CrossFade(anim.runBackWard.name, 0.3f);
+        //}
+        //else if (h >= 0.1f)
+        //{
+        //    _animation.CrossFade(anim.runRight.name, 0.3f);
+        //}
+        //else if (h <= 0.1f)
+        //{
+        //    _animation.CrossFade(anim.rumLeft.name, 0.3f);
+        //}
+        //else
+        //{
+        //    _animation.CrossFade(anim.idle.name, 0.3f);
+        //}
+
+        if (h >= 0.1f)
         {
-            //_animation.clip = anim.runForward;
-            _animation.CrossFade(anim.runForward.name, 0.3f);
+            print("Horizontal");
+        }
+        else if (h <= -0.1f)
+        {
+            print("-Horizontal");
+        }
+        else if (v >= 0.1f)
+        {
+            print("Vertical");
         }
         else if (v <= -0.1f)
         {
-            _animation.CrossFade(anim.runBackWard.name, 0.3f);
-        }
-        else if (h >= 0.1f)
-        {
-            _animation.CrossFade(anim.runRight.name, 0.3f);
-        }
-        else if (h <= 0.1f)
-        {
-            _animation.CrossFade(anim.rumLeft.name, 0.3f);
+            print("-Vertical");
         }
         else
         {
-            _animation.CrossFade(anim.idle.name, 0.3f);
+            print("Idle");
         }
 
         print("h = " + h + "\n" + "v = " + v);
