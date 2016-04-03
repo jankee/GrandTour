@@ -28,7 +28,6 @@ public class FollowCam : MonoBehaviour
     {
         camTr.position = Vector3.Lerp(camTr.position, targetTr.position - (targetTr.forward * dist) +
             (Vector3.up * height), Time.deltaTime * dampTrace);
-        print("HI");
         camTr.LookAt(targetTr.position);
 	}
 }

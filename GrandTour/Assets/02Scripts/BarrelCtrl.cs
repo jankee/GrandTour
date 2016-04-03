@@ -6,6 +6,8 @@ public class BarrelCtrl : MonoBehaviour
     //폭발 이펙트
     public GameObject expEffect;
 
+    public GameObject sparkEff;
+
     //드럼통의 Transform 좌표
     private Transform tr;
 
@@ -31,7 +33,11 @@ public class BarrelCtrl : MonoBehaviour
         print("HI");
         if (colli.collider.tag == "BULLET")
         {
+
+            GameObject spark = (GameObject)Instantiate(sparkEff, colli.transform.position, Quaternion.identity);
+
             Destroy(colli.gameObject);
+            Destroy(spark, spark.GetComponent<ParticleSystem>().duration + 0.5f);
 
             //총알 맞은 횟수 증가
             if (++hitCount > 3)
