@@ -20,6 +20,10 @@ public class GameMgr: MonoBehaviour
 
     public List<GameObject> monsterPool = new List<GameObject>();
 
+    public float sfxVolumn = 1f;
+
+    public bool isSfxMute = false;
+
     public void Awake()
     {
         if (instance == null)
@@ -96,5 +100,32 @@ public class GameMgr: MonoBehaviour
             //    yield return null;
             //}
         }
+    }
+
+    public void PlaySfx(Vector3 pos, AudioClip sfx)
+    {
+        if (isSfxMute)
+        {
+            return;
+        }
+
+        //게임오브젝트를 동적으로 생성
+        GameObject soundObj = new GameObject("Sfx");
+        //사운드 발생 위치
+        soundObj.transform.position = pos;
+
+        AudioSource audioSource = soundObj.AddComponent<AudioSource>();
+
+        //audioSource 속성 설정
+        audioSource.clip = sfx;
+        audioSource.minDistance = 10f;
+        audioSource.maxDistance = 30f;
+        //sfxVolume 변수로 게임의 전체적인 볼륨 설정
+        audioSource.volume = sfxVolumn;
+        //사운드 실행
+        audioSource.Play();
+
+        //사운드의 플레이가 종료되면 동적으로 생성한 게임오브젝트를 삭제
+        Destroy(soundObj, sfx.length);
     }
 }

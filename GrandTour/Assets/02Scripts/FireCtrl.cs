@@ -28,6 +28,8 @@ public class FireCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(firePos.position, firePos.forward, Color.green);
+
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
@@ -38,7 +40,8 @@ public class FireCtrl : MonoBehaviour
     {
         CreateBullet();
         //사운드 실행
-        source.PlayOneShot(fireSfx, 0.9f);
+        //source.PlayOneShot(fireSfx, 0.9f);
+        GameMgr.instance.PlaySfx(firePos.position, fireSfx);
 
         StartCoroutine(ShowMuzzleFlash());
     }

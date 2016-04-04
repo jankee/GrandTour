@@ -40,7 +40,7 @@ public class MonsterCtrl : MonoBehaviour
     private GameUI gameUI;
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
     {
         monsterTr = GetComponent<Transform>();
 
@@ -53,17 +53,17 @@ public class MonsterCtrl : MonoBehaviour
         gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
 
         //nvAgent.destination = playerTr.position;
+	}
+
+    void OnEnable()
+    {
+        PlayerCtrl.OnPlayerDie += this.OnPlayerDie;
 
         //일정한 간격으로 몬스터의 행동 상태를 체크하는 코루틴 함수 실행
         StartCoroutine(CheckMonsterState());
 
         //일정한 간격으로 몬스터의 상태에 따라 애니 설정
         StartCoroutine(MonsterAction());
-	}
-
-    void OnEnable()
-    {
-        PlayerCtrl.OnPlayerDie += this.OnPlayerDie;
     }
 
     public void OnDisable()
@@ -208,8 +208,31 @@ public class MonsterCtrl : MonoBehaviour
 
         gameUI.DispScore(50);
 
-        gameObject.SetActive(false);
+        StartCoroutine(PushObjectPool());
+
+        //gameObject.SetActive(false);
 
         //Destroy(this.gameObject, 10f);
+    }
+
+    IEnumerator PushObjectPool()
+    {
+        yield return new WaitForSeconds(3f);
+
+        //변수 초기화
+        isDie = false;
+        hp = 100;
+        gameObject.tag = "MONSTER";
+        monsterState = MonsterState.idle;
+
+        //몬스터 Collision 활성화
+        GetComponentInChildren<CapsuleCollider>().enabled = true;
+        foreach (Collider item in GetComponentsInChildren<SphereCollider>())
+        {
+            item.enabled = true;
+        }
+
+        //몬스터 비활성화
+        gameObject.SetActive(false);
     }
 }
