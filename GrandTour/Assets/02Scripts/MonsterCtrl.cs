@@ -235,4 +235,23 @@ public class MonsterCtrl : MonoBehaviour
         //몬스터 비활성화
         gameObject.SetActive(false);
     }
+
+    void OnDamage(object[] _params)
+    {
+        print("Damage " + _params[0] + " : " + _params[1]);
+
+        //혈흔 효과 시작 오브젝트를 Vector3로 변환하여 사용
+        CreateBloodEffect((Vector3)_params[0]);
+
+        //Damage를 추출해 몬스터 Hp 차감
+        hp -= (int)_params[1];
+        if (hp <= 0)
+        {
+            MonsterDie();
+        }
+
+        //IsHit Trigger를 발생시키면 Any State에서 gothit로 전이됨
+        animator.SetTrigger("IsHit");
+    }
+
 }

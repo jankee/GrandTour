@@ -69,6 +69,30 @@ public class BarrelCtrl : MonoBehaviour
             }
         }
 
-        Destroy(gameObject, 5.0f);
+        Destroy(this.gameObject, 5.0f);
+    }
+
+    void OnDamage(object[] _params)
+    {
+        //발사 위치
+        Vector3 firePos = (Vector3)_params[0];
+        //맞은 위치
+        Vector3 hitPos = (Vector3)_params[1];
+        //입사벡터(Ray의 각도)
+        Vector3 incomeVector = hitPos - firePos;
+        print("IncomeVector : " + incomeVector);
+        //입사벡터를 정규화(Normalized)벡터로 변경
+        incomeVector = incomeVector.normalized;
+        print("IncomeVector Normalized : " + incomeVector);
+        //Ray의 hit좌표에 입사벡터의 각도로 힘을 생성
+        GetComponent<Rigidbody>().AddForceAtPosition(incomeVector * 1000f, hitPos);
+
+
+        GameObject spark = (GameObject)Instantiate(sparkEff, hitPos, Quaternion.identity);
+
+        if (++hitCount > 3)
+        {
+            ExpBarrel();
+        }
     }
 }

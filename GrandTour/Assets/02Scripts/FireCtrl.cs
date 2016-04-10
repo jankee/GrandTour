@@ -28,11 +28,41 @@ public class FireCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(firePos.position, firePos.forward, Color.green);
+        Debug.DrawRay(firePos.position, firePos.forward * 10f, Color.green);
 
         if (Input.GetMouseButtonDown(0))
         {
-            Fire();
+            //Fire();
+
+            //Ray에 맞은 게임오브젝트의 정보 변수
+            RaycastHit hit;
+
+            //Raycast 함수로 Ray를 발사해 맞은 게임오브젝트가 있을 때 true를 반환
+            if (Physics.Raycast(firePos.position, firePos.forward, out hit, 10f))
+            {
+                StartCoroutine(ShowMuzzleFlash());
+                //Ray에 맞는 게임오브젝트태그 Tag 값을 비교해 몬스터 여부 체크
+                if (hit.collider.tag == "MONSTER")
+                {
+                //    //SendMessage를 이용해 전달한 인자를 배열에 담음
+                    object[] _params = new object[2];
+                    print(_params.Length);
+                    _params[0] = hit.point;                     //Ray에 맞은 정확한 위치값(Vector3)
+                    print("hit : " + hit.point);
+                    _params[1] = 20;                            //몬스터에 입힐 데미지 값
+                    //몬스터에 데미지 입히는 함수 호출
+                    hit.collider.gameObject.SendMessage("OnDamage", _params, SendMessageOptions.DontRequireReceiver);
+                }
+
+                if (hit.collider.tag == "BARREL")
+                {
+                    print("Barrel");
+                    object[] _params = new object[2];
+                    _params[0] = firePos.position;
+                    _params[1] = hit.point;
+                    hit.collider.gameObject.SendMessage("OnDamage", _params, SendMessageOptions.DontRequireReceiver);
+                }
+            }
         }
     }
 

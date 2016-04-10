@@ -128,4 +128,5 @@ public class GameMgr: MonoBehaviour
         //사운드의 플레이가 종료되면 동적으로 생성한 게임오브젝트를 삭제
         Destroy(soundObj, sfx.length);
     }
+
 }
