@@ -6,9 +6,13 @@ GrandTour/Temp/
 GrandTour/Library/
 GrandTour/obj/
 =======
-GrandTure/Temp/
-GrandTure/Library/
-GrandTure/obj/
+
+ShooterNet/Temp/
+ShooterNet/Library/
+ShooterNet/obj/
+
+
+
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
 
 # ===================================== #
@@ -19,12 +23,17 @@ GrandTour/*.csproj
 *.pidb
 *.suo
 GrandTour/*.sln
-=======
-GrandTure/*.csproj
+
+
+
+ShooterNet/*.csproj
 *.pidb
 *.suo
-GrandTure/*.sln
+ShooterNet/*.sln
+
+
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
+
 *.user
 *.unityproj
 *.booproj
