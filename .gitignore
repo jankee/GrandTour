@@ -11,6 +11,9 @@ ShooterNet/Temp/
 ShooterNet/Library/
 ShooterNet/obj/
 
+TankPvP/Temp/
+TankPvP/Library/
+TankPvP/obj/
 
 
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
@@ -24,13 +27,15 @@ GrandTour/*.csproj
 *.suo
 GrandTour/*.sln
 
-
-
 ShooterNet/*.csproj
 *.pidb
 *.suo
 ShooterNet/*.sln
 
+TankPvP/*.csproj
+*.pidb
+*.suo
+TankPvP/*.sln
 
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
 

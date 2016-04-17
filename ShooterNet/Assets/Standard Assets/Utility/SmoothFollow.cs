@@ -33,7 +33,6 @@ namespace UnityStandardAssets.Utility
 			// Calculate the current rotation angles
 			var wantedRotationAngle = target.eulerAngles.y;
 			var wantedHeight = target.position.y + height;
-
 			var currentRotationAngle = transform.eulerAngles.y;
 			var currentHeight = transform.position.y;
 
@@ -42,7 +41,6 @@ namespace UnityStandardAssets.Utility
 
 			// Damp the height
 			currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
-
 			// Convert the angle into a rotation
 			var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
 
