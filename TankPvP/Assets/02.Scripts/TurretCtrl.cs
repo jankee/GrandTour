@@ -26,7 +26,6 @@ public class TurretCtrl : MonoBehaviour
         //Physics.Raycast(광선, out 충돌정보, 거리, 레이어 마스크)
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1<<8))
         {
-            print(hit.point);
             //Ray에 맞는 위치를 로컬좌표로 변환
             Vector3 relative = tran.InverseTransformPoint(hit.point);
             //역탄젠트 함수인 Atan2로 두 점간의 각도를 계산
