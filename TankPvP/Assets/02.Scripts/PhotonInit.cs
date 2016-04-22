@@ -24,7 +24,7 @@ public class PhotonInit : MonoBehaviour
         PhotonNetwork.CreateRoom("MyRoom");
     }
 
-    void OnJoineRoom()
+    void OnJoinedRoom()
     {
         print("Enter Room !");
     }
