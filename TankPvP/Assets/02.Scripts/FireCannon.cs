@@ -11,6 +11,8 @@ public class FireCannon : MonoBehaviour
     private AudioSource sfx = null;
     //cannon 발사 지점
     public Transform firePos;
+    //PhotonView 컴포넌트 변수
+    public PhotonView pv = null;
 
     public void Awake()
     {
@@ -18,17 +20,25 @@ public class FireCannon : MonoBehaviour
         fireSfx = Resources.Load<AudioClip>("CannonFire");
 
         sfx = GetComponent<AudioSource>();
+
+        pv = this.gameObject.GetComponentInParent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //PhotonView가 자신의 것이고 마우스 오른쪽 클릭시 발사한다.
+        if (pv.isMine && Input.GetMouseButtonDown(0))
         {
+            //자신의 탱크일경우 로컬함수를 호출
             Fire();
+
+            //원격네트워크 플레이어 RPC로 원격으로 Fire함수를 호출
+            pv.RPC("Fire", PhotonTargets.Others, null);
         }
     }
 
+    [PunRPC]
     void Fire()
     {
         Instantiate(cannon, firePos.position, firePos.rotation);
