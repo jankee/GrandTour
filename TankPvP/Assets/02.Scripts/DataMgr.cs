@@ -10,7 +10,7 @@ public class DataMgr : MonoBehaviour
     private const string seqNo = "u101113475_hoon";
 
     //점수 저장 php 주소
-    private string urlSave = "http://sql3.hostinger.kr/phpmyadmin/index.php?db=u101113475_janke&token=a420ac154deafabe322906790f2e84e8";
+    private string urlSave = "http://jankee.esy.es/save_score.php";
 
     // Use this for initialization
     void Awake()
