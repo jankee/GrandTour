@@ -16,7 +16,9 @@ public class FireCannon : MonoBehaviour
 
     public void Awake()
     {
+
         cannon = (GameObject)Resources.Load("Cannon");
+        print("Fire");
         fireSfx = Resources.Load<AudioClip>("CannonFire");
 
         sfx = GetComponent<AudioSource>();
@@ -27,9 +29,16 @@ public class FireCannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //PhotonView가 자신의 것이고 마우스 오른쪽 클릭시 발사한다.
-        if (pv.isMine && Input.GetMouseButtonDown(0))
+        if (MouseHover.instance.isUIHover)
         {
+            return;
+        }
+
+        //PhotonView가 자신의 것이고 마우스 오른쪽 클릭시 발사한다.
+        else if (Input.GetMouseButtonDown(0))
+        {
+            print("Fire");
+
             //자신의 탱크일경우 로컬함수를 호출
             Fire();
 
@@ -41,7 +50,9 @@ public class FireCannon : MonoBehaviour
     [PunRPC]
     void Fire()
     {
+        
         Instantiate(cannon, firePos.position, firePos.rotation);
+
 
         //발사 사운드
         sfx.PlayOneShot(fireSfx, 1f);
