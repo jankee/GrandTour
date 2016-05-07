@@ -39,13 +39,28 @@ public class TankDamage : MonoBehaviour
 
     IEnumerator ExplosionTank()
     {
-        yield return new WaitForSeconds(0);
+        Object effect = GameObject.Instantiate(expEffect, transform.position, Quaternion.identity);
+
+        Destroy(effect, 3f);
+
+        //탱크 투명처리
+        SetTankVisible(false);
+        //3초 동안 기다렸다가 활성화하는 로직을 수행
+        yield return new WaitForSeconds(3f);
+
+        //리스폰 시 생명 초기값 설정
+        currHp = initHp;
+        //탱크를 다시 보이게 처리
+        SetTankVisible(true);
     }
 
 
-    // Update is called once per frame
-    void Update()
+    //MeshRenderer를 활성/비활성화하는 함스
+    void SetTankVisible(bool isVisible)
     {
-
+        foreach (MeshRenderer _renderer in renderers)
+        {
+            _renderer.enabled = isVisible;
+        }
     }
 }

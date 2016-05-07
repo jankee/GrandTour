@@ -43,7 +43,7 @@ public class FireCannon : MonoBehaviour
             Fire();
 
             //원격네트워크 플레이어 RPC로 원격으로 Fire함수를 호출
-            //pv.RPC("Fire", PhotonTargets.Others, null);
+            pv.RPC("Fire", PhotonTargets.Others, null);
         }
     }
 

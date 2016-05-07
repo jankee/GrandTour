@@ -40,6 +40,6 @@ public class PhotonInit : MonoBehaviour
     {
         float pos = Random.Range(-100f, 100f);
 
-        PhotonNetwork.Instantiate("Tank", new Vector3(pos, 20f, pos), Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("Tank", new Vector3(pos, 2f, pos), Quaternion.identity, 0);
     }
 }
