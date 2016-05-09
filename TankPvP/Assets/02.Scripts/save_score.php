@@ -1,6 +1,6 @@
 <?php
 	//데이터베이스 접속
-	$connect = mysql_connect("u101113475_jankee", "u101113475_hoon", "jung1920");
+	$connect = mysql_connect("localhost", "u101113475_hoon", "jung1920");
 
 	//데이터베이스 접속 성공여부 확인
 	if($connect == 0)
@@ -10,6 +10,9 @@
 		else
 		{
 		}
+
+	//사용할 데이터베이스 설정
+	mysql_select_db("u101113475_jankee", $connect);
 
 	//post방식으로 전달된 파라미터를 변수에 저장
 	$user_name = $_POST["user_name"];
