@@ -8,14 +8,14 @@ public class LoadUserInfo : MonoBehaviour
 {
 
     public TextAsset jsonData = null;
-    public string strJsonData = null;
+    private string strJsonData = null;
 
     // Use this for initialization
     void Start()
     {
 
         //Resource 폴더의 JSON파일을 로드
-        jsonData = Resources.Load<TextAsset>("user_info");
+        jsonData = Resources.Load<TextAsset>("driver");
         strJsonData = jsonData.text;
 
         //utf-8 인코딩
@@ -38,18 +38,21 @@ public class LoadUserInfo : MonoBehaviour
         var N = JSON.Parse(strJsonData);
 
         //"이름" 키에 저장된 키값을 축출
-        string user_name = N["Name"].ToString();
+        string user_name = N["Character"][3]["Driver"].ToString();
 
         print(user_name);
-        //"Ability" 중에 "Level"키 값을 축출
-        int level = N["Ability"]["Level"].AsInt;
 
-        print(level);
+        //print(N["Character"]["Job"]);
+
+        ////"Ability" 중에 "Level"키 값을 축출
+        //int level = N["Ability"]["Level"].AsInt;
+
+        //print(level);
 
         //"Skill"배열값을 축출
-        for (int i = 0; i < N["Skill"].Count; i++)
+        for (int i = 0; i < N["Character"].Count; i++)
         {
-            print(N["Skill"][i].ToString());
+            print(N["Character"][i].ToString());
         }
     }
 }

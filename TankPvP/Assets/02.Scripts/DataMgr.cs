@@ -7,10 +7,10 @@ public class DataMgr : MonoBehaviour
     public static DataMgr instance = null;
 
     //MySQL 데이터베이스 사용할 고유번호
-    private const string seqNo = "u101113475_hoon";
+    private const string seqNo = "2";
 
     //점수 저장 php 주소
-    private string urlSave = "http://jankee.esy.es/save_score.php";
+    private string urlSave = "http://localhost:8080/save_score.php";
 
     // Use this for initialization
     void Awake()

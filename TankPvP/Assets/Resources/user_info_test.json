@@ -1,0 +1,22 @@
+{
+	"Character": {
+		"Name": "Snaper",
+		"Sex": "Male",
+		"Job": "Snaper",
+		"Level": 1000,
+		"Health": 100,
+		"Vitality": 50,
+		"Mana": 1200
+	},
+	"Skill": [
+		{
+			"type": "Snaper Skill",
+			"skill": [
+				"Cover up",
+				" Invisible",
+				" Sabot"
+			],
+			"score": 27004
+		}
+	]
+}
