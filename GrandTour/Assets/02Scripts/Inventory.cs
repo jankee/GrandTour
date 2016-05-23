@@ -4,84 +4,68 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> Slots = new List<GameObject>();
-    public List<Item> Items = new List<Item>();
-    public GameObject slots;
-
-    ItemDatabase database;
-
-    int x = -110;
-    int y = 118;
+    //인벤토리 RectTransform 컴포넌트 변수
+    private RectTransform inventoryRect;
+    //인벤토리의 가로,세로 길이
+    private float inventoryWidth, inventoryHight;
+    //인벤토리의 슬롯갯수
+    public int slots;
+    //인벤토리의 로우갯수
+    public int rows;
+    //슬롯의 옆, 위 간격 거리
+    public float slotPaddingLeft, slotPaddingTop;
+    //슬롯의 크기
+    public float slotSize;
+    //슬롯의 프립펩
+    public GameObject slotPrefab;
+    //슬롯 리스트 변수
+    private List<GameObject> allSlots;
 
     // Use this for initialization
     void Start()
     {
-        int slotAmout = 0;
+        CreateLayout();
+    }
 
-        database = GameObject.FindGameObjectWithTag("ITEMDATABASE").GetComponent<ItemDatabase>();
+    void Update()
+    {
 
-        for (int i = 0; i < 5; i++)
+    }
+
+    private void CreateLayout()
+    {
+        //allSlots 리스트를 초기화
+        allSlots = new List<GameObject>();
+        //인벤토리 가로 길이 계산
+        inventoryWidth = (slots / rows) * (slotSize + slotPaddingLeft) + slotPaddingLeft;
+        //인벤토리 세로 길이 계산
+        inventoryHight = rows * (slotSize + slotPaddingTop) + slotPaddingTop;
+
+        //inventoryRect의 RectTransform의 초기화
+        inventoryRect = GetComponent<RectTransform>();
+        //inventoryRect의 가로길이에 inventoryWidth값을 넣어 준다
+        inventoryRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, inventoryWidth);
+        //inventoryRect의 세로길이에 inventoryHight값을 넣어 준다
+        inventoryRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, inventoryHight);
+
+        //-------------------------스롯 위치 계산----------------------------------------
+        //컬럼의 갯수를 계산
+        int colums = slots / rows;
+
+        for (int y = 0; y < rows; y++)
         {
-            for (int k = 0; k < 5; k++)
+            for (int x = 0; x < colums; x++)
             {
-
-                GameObject slot = (GameObject)Instantiate(slots);
-
-                slot.GetComponent<SlotScript>().slotNumber = slotAmout;
-
-                Slots.Add(slot);
-
-                //이해하지 못하는 곳
-                //Items.Add(database.items[i]);
-                Items.Add(new Item());
-
-
-                slot.transform.parent = this.gameObject.transform;
-                slot.name = "slot" + i + "-" + k;
-                slot.GetComponent<RectTransform>().localPosition = new Vector3(x, y, 0);
-                x = x + 55;
-
-                if (k == 4)
-                {
-                    x = -110;
-                    y = y - 55;
-                }
-                //slotAmount에 가산을 한다.
-                slotAmout++;
+                //newSlot 변수에 slotPrefab을 생성해 준다
+                GameObject newSlot = (GameObject)Instantiate(slotPrefab);
+                //slotRect의 newSlot의 RectTransform 컴포넌트 변수를 넣어 준다
+                RectTransform slotRect = newSlot.GetComponent<RectTransform>();
+                //생성된 newSlot에 이름을 Slot으로 정한다.
+                newSlot.name = "Slot";
+                //newSlot의 부모를 Canvas로 정해 준다
+                newSlot.transform.SetParent(this.transform.parent);
             }
         }
-
-        AddItem(0);
-        AddItem(1);
-
-        print(Items[0].itemName);
-        print(Items[1].itemName);
     }
     
-    void AddItem(int id)
-    {
-        for (int i = 0; i < database.items.Count; i++)
-        {
-            if (database.items[i].itemID == id)
-            {
-                Item item = database.items[i];
-                AddItemAtEmptySlot(item);
-
-                break;
-            }
-        }
-    }
-
-    void AddItemAtEmptySlot(Item item)
-    {
-        for (int i = 0; i < Items.Count; i++)
-        {
-            if (Items[i].itemName == null)
-            {
-                Items[i] = item;
-
-                break;
-            }
-        }
-    }
 }
