@@ -64,8 +64,18 @@ public class Inventory : MonoBehaviour
                 newSlot.name = "Slot";
                 //newSlot의 부모를 Canvas로 정해 준다
                 newSlot.transform.SetParent(this.transform.parent);
+                //스롯의 포지션을 정한다.
+                slotRect.localPosition = inventoryRect.localPosition + new Vector3(slotPaddingLeft * (x + 1) + (slotSize * x), 
+                    -slotPaddingTop * (y + 1) - (slotSize * y), 0);
+                //스롯의 사이즈 변경
+                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotSize);
+                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, slotSize);
+                //스롯들을 allSlots리스트에 등록
+                allSlots.Add(newSlot);
             }
         }
+
+        print(allSlots.Count);
     }
     
 }
