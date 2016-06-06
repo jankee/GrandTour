@@ -40,6 +40,21 @@ public class Inventory : MonoBehaviour
         get { return canvasGroup; }
     }
 
+    private static Inventory instance;
+
+    public static Inventory Instance
+    {
+
+        get 
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindObjectOfType<Inventory>();
+            }
+            return Inventory.instance; 
+        }
+    }
+
     private bool fadingIn, fadingOut;
 
     public float fadingTime;
@@ -55,7 +70,19 @@ public class Inventory : MonoBehaviour
         set { emptySlot = value; }
     }
 
+    private static GameObject clicked;
 
+    public GameObject selectStackSize;
+
+    public Text stackText;
+
+
+    private int splitAmount;
+
+    private int maxStackCount;
+
+    private static Slot movingSlot;
+         
     // Use this for initialization
     void Start()
     {
@@ -98,6 +125,8 @@ public class Inventory : MonoBehaviour
             if (canvasGroup.alpha > 0)
             {
                 StartCoroutine("FadeOut");
+                //인벤토리가 안보여지면 원위치를 시킨다
+                PutItemBack();
             }
             else
             {
@@ -221,33 +250,20 @@ public class Inventory : MonoBehaviour
 
     public void MoveItem(GameObject clicked)
     {
+        Inventory.clicked = clicked;
+
         //from 스롯이 비여있고 캔버스 알파 가 1이면
         if (from == null && canvasGroup.alpha == 1)
         {
-            //스롯이 비여있지 않다면
-            if (!clicked.GetComponent<Slot>().IsEmpty)
+            //스롯이 비여있지 않고 Hover를 찾을 수 없다면
+            if (!clicked.GetComponent<Slot>().IsEmpty && !GameObject.Find("Hover"))
             {
+
                 from = clicked.GetComponent<Slot>();
 
                 from.GetComponent<Image>().color = Color.gray;
 
-                //static hoverObject에 iconPrefab을 넣어준다.
-                hoverObject = (GameObject)Instantiate(iconPrefab);
-                //clicked 오브젝트의 스프라이트를 hoverObject에 넣어 준다
-                hoverObject.GetComponent<Image>().sprite = clicked.GetComponent<Image>().sprite;
-                //hoverObject의 이름을 Hover로 바꾸어 줌
-                hoverObject.name = "Hover";
-
-                //clicked, hoverObject를 RectTransform 컴포넌트를 등록한다
-                RectTransform hoverTransform = hoverObject.GetComponent<RectTransform>();
-                RectTransform clickedTransform = clicked.GetComponent<RectTransform>();
-                //clickedTransform의 사이즈를 hoverTransform의 사이즈로 넣어줌
-                hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, clickedTransform.sizeDelta.x);
-                hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clickedTransform.sizeDelta.y);
-                //hoverObject의 부모관계와 로컬스케일 설정한다
-                hoverObject.transform.SetParent(GameObject.Find("Canvas").transform, true);
-                hoverObject.transform.localScale = from.gameObject.transform.localScale;
-
+                CreateHoverIcon();
             }
         }
         //to 슬롯이 비여있다면
@@ -281,6 +297,27 @@ public class Inventory : MonoBehaviour
             hoverObject = null;
             Destroy(GameObject.Find("Hover"));
         }
+    }
+
+    private void CreateHoverIcon()
+    {
+
+        //static hoverObject에 iconPrefab을 넣어준다.
+        hoverObject = (GameObject)Instantiate(iconPrefab);
+        //clicked 오브젝트의 스프라이트를 hoverObject에 넣어 준다
+        hoverObject.GetComponent<Image>().sprite = clicked.GetComponent<Image>().sprite;
+        //hoverObject의 이름을 Hover로 바꾸어 줌
+        hoverObject.name = "Hover";
+
+        //clicked, hoverObject를 RectTransform 컴포넌트를 등록한다
+        RectTransform hoverTransform = hoverObject.GetComponent<RectTransform>();
+        RectTransform clickedTransform = clicked.GetComponent<RectTransform>();
+        //clickedTransform의 사이즈를 hoverTransform의 사이즈로 넣어줌
+        hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, clickedTransform.sizeDelta.x);
+        hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clickedTransform.sizeDelta.y);
+        //hoverObject의 부모관계와 로컬스케일 설정한다
+        hoverObject.transform.SetParent(GameObject.Find("Canvas").transform, true);
+        hoverObject.transform.localScale = from.gameObject.transform.localScale;
     }
 
     private void PutItemBack()
