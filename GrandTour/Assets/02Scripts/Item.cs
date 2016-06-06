@@ -1,48 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Item
+//아이템 타입을 정해 enum으로 정한다.
+public enum ItemType 
 {
-    public string itemName;
-    public int itemID;
-    public string itemDescription;
-    public Sprite itemIcon;
-    public GameObject itemModel;
-    public int itemPower;
-    public int itemSpeed;
-    public int itemVelue;
-    public ItemType itemtype;
+    MANA,
+    HEALTH,
+};
 
-    public enum ItemType
+public class Item : MonoBehaviour
+{
+    //아이템타임을 type변수 정한다.
+    public ItemType type;
+    //사용할 sprite를 사용 할 변수
+    public Sprite spriteNeutral;
+    //선택할때 sprite를 사용 할 변수
+    public Sprite spriteHighlighted;
+    //아이템의 최대치를 정할 변수
+    public int maxSize;
+
+    public void Use()
     {
-        Weapon,
-        Consumable,
-        Quest,
-        Head,
-        Shoes,
-        Chest,
-        Trousers,
-        Earrings,
-        Necklace,
-        Ring,
-        Hands
-    }
-
-    // Use this for initialization
-    public Item(string name, int id, string desc, int powor, int speed, int value, ItemType type)
-    {
-        itemName = name;
-        itemID = id;
-        itemDescription = desc;
-        itemPower = powor;
-        itemSpeed = speed;
-        itemVelue = value;
-        itemtype = type;
-        itemIcon = Resources.Load<Sprite>("" + name);
-    }
-
-    public Item()
-    {
-
+        switch (type)
+        {
+            case ItemType.MANA:
+                print("I used a Mana Potion");
+                break;
+            case ItemType.HEALTH:
+                print("I used a Health Potion");
+                break;
+        }
     }
 }
