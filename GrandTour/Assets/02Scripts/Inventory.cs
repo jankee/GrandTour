@@ -279,6 +279,19 @@ public class Inventory : MonoBehaviour
             to = null;
             from = null;
             hoverObject = null;
+            Destroy(GameObject.Find("Hover"));
+        }
+    }
+
+    private void PutItemBack()
+    {
+        //from 비여있지 않으면
+        if (from != null)
+        {
+            //Hover 를 지우고 from을 화이트로 바꾸어 준다
+            Destroy(GameObject.Find("Hover"));
+            from.GetComponent<Image>().color = Color.white;
+            from = null;
         }
     }
 
