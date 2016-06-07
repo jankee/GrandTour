@@ -90,6 +90,8 @@ public class Inventory : MonoBehaviour
 
         //레이아웃 생성 함수 호출
         CreateLayout();
+
+        movingSlot = GameObject.Find("MovingSlot").GetComponent<Slot>();
     }
 
     void Update()
@@ -251,9 +253,27 @@ public class Inventory : MonoBehaviour
     public void MoveItem(GameObject clicked)
     {
         Inventory.clicked = clicked;
+        print(clicked.name);
 
+        if (!movingSlot.IsEmpty)
+        {
+            Slot tmp = clicked.GetComponent<Slot>();
+
+            if (tmp.IsEmpty)
+            {
+                tmp.AddItems(movingSlot.Items);
+
+                movingSlot.Items.Clear();
+
+                Destroy(GameObject.Find("Hover"));
+            }
+            else if (!tmp.IsEmpty && movingSlot.CurrentItem.type == tmp.CurrentItem.type && tmp.IsAvailable)
+            {
+                MergeStacks(movingSlot, tmp);
+            }
+        }
         //from 스롯이 비여있고 캔버스 알파 가 1이면
-        if (from == null && canvasGroup.alpha == 1)
+        else if (from == null && canvasGroup.alpha == 1 && !Input.GetKey(KeyCode.LeftShift))
         {
             //스롯이 비여있지 않고 Hover를 찾을 수 없다면
             if (!clicked.GetComponent<Slot>().IsEmpty && !GameObject.Find("Hover"))
@@ -267,7 +287,7 @@ public class Inventory : MonoBehaviour
             }
         }
         //to 슬롯이 비여있다면
-        else if (to == null)
+        else if (to == null && !Input.GetKey(KeyCode.LeftShift))
         {
             to = clicked.GetComponent<Slot>();
             Destroy(GameObject.Find("Hover"));
@@ -317,7 +337,9 @@ public class Inventory : MonoBehaviour
         hoverTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clickedTransform.sizeDelta.y);
         //hoverObject의 부모관계와 로컬스케일 설정한다
         hoverObject.transform.SetParent(GameObject.Find("Canvas").transform, true);
-        hoverObject.transform.localScale = from.gameObject.transform.localScale;
+        hoverObject.transform.localScale = clicked.gameObject.transform.localScale;
+
+        hoverObject.transform.GetChild(0).GetComponent<Text>().text = movingSlot.Items.Count > 1 ? movingSlot.Items.Count.ToString() : string.Empty;
     }
 
     private void PutItemBack()
@@ -329,6 +351,66 @@ public class Inventory : MonoBehaviour
             Destroy(GameObject.Find("Hover"));
             from.GetComponent<Image>().color = Color.white;
             from = null;
+        }
+    }
+
+    public void SetStackInfo(int maxStackCount)
+    {
+        selectStackSize.SetActive(true);
+        splitAmount = 0;
+        this.maxStackCount = maxStackCount;
+        stackText.text = splitAmount.ToString();
+    }
+
+    public void SplitStack()
+    {
+        selectStackSize.SetActive(false);
+
+        if (splitAmount == maxStackCount)
+        {
+            MoveItem(clicked);
+        }
+        else if (splitAmount > 0)
+        {
+            movingSlot.Items = clicked.GetComponent<Slot>().RemoveItems(splitAmount);
+
+            CreateHoverIcon();
+        }
+    }
+
+    public void ChangeStackText(int i)
+    {
+        splitAmount += i;
+
+        if (splitAmount < 0)
+        {
+            splitAmount = 0;
+        }
+
+        if (splitAmount > maxStackCount)
+        {
+            splitAmount = maxStackCount;
+        }
+
+        stackText.text = splitAmount.ToString();
+    }
+
+    public void MergeStacks(Slot source, Slot destination)
+    {
+        int max = destination.CurrentItem.maxSize - destination.Items.Count;
+
+        int count = source.Items.Count < max ? source.Items.Count : max;
+
+        for (int i = 0; i < count; i++)
+        {
+            destination.AddItem(source.RemoveItem());
+        }
+
+        if (source.Items.Count == 0)
+        {
+            source.ClearSlot();
+
+            Destroy(GameObject.Find("Hover"));
         }
     }
 
