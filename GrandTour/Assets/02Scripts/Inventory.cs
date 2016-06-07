@@ -111,6 +111,11 @@ public class Inventory : MonoBehaviour
                 //emptySlot에 하나를 더 해준다
                 emptySlot++;
             }
+            else if (!eventSystem.IsPointerOverGameObject(-1) && !movingSlot.IsEmpty)
+            {
+                movingSlot.ClearSlot();
+                Destroy(GameObject.Find("Hover"));
+            }
         }
 
         if (hoverObject != null)
@@ -172,7 +177,7 @@ public class Inventory : MonoBehaviour
                 //생성된 newSlot에 이름을 Slot으로 정한다.
                 newSlot.name = "Slot";
                 //newSlot의 부모를 Canvas로 정해 준다
-                newSlot.transform.SetParent(this.transform.parent);
+                newSlot.transform.SetParent(this.transform.parent.GetChild(1));
                 //스롯의 포지션을 정한다.
                 slotRect.localPosition = inventoryRect.localPosition + new Vector3(slotPaddingLeft * (x + 1) + (slotSize * x), 
                     -slotPaddingTop * (y + 1) - (slotSize * y), 0);
@@ -253,7 +258,7 @@ public class Inventory : MonoBehaviour
     public void MoveItem(GameObject clicked)
     {
         Inventory.clicked = clicked;
-        print(clicked.name);
+        
 
         if (!movingSlot.IsEmpty)
         {
@@ -321,6 +326,7 @@ public class Inventory : MonoBehaviour
 
     private void CreateHoverIcon()
     {
+        print(Inventory.clicked.name);
 
         //static hoverObject에 iconPrefab을 넣어준다.
         hoverObject = (GameObject)Instantiate(iconPrefab);
