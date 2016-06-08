@@ -140,6 +140,13 @@ public class Inventory : MonoBehaviour
                 StartCoroutine("FadeIn");
             }
         }
+        if (Input.GetMouseButton(2))
+        {
+            if (eventSystem.IsPointerOverGameObject(-1))
+            {
+                MoveInventory();
+            }
+        }
     }
 
     private void CreateLayout()
@@ -215,9 +222,16 @@ public class Inventory : MonoBehaviour
                     //
                     if (tmp.CurrentItem.type == item.type && tmp.IsAvailable)
                     {
-                        //인벤토리 아이템에 더하다
-                        tmp.AddItem(item);
-                        return true;
+                        if (!movingSlot.IsEmpty && clicked.GetComponent<Slot>() == tmp.GetComponent<Slot>())
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            //인벤토리 아이템에 더하다
+                            tmp.AddItem(item);
+                            return true;
+                        }
                     }    
                 }
                 
@@ -228,6 +242,16 @@ public class Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void MoveInventory()
+    {
+        Vector2 mousePos;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, new Vector3(Input.mousePosition.x 
+            - (inventoryRect.sizeDelta.x / 2 * canvas.scaleFactor), Input.mousePosition.y - (inventoryRect.sizeDelta.y / 2 * canvas.scaleFactor)), canvas.worldCamera, out mousePos);
+
+        transform.position = canvas.transform.TransformPoint(mousePos);
     }
 
 
@@ -300,20 +324,28 @@ public class Inventory : MonoBehaviour
         //to from 슬롯이 비여 않다면
         if (to != null && from != null)
         {
-            //tmp 슬롯에 to슬롯을 넣어준다.
-            Stack<Item> tmpTo = new Stack<Item>(to.Items);
-            //to 슬롯에 from을 넣어 준다
-            to.AddItems(from.Items);
-            //tmpTo가 0이면
-            if (tmpTo.Count == 0)
+            if (!to.IsEmpty && from.CurrentItem.type == to.CurrentItem.type && to.IsAvailable)
             {
-                from.ClearSlot();
+                MergeStacks(from, to);
             }
             else
             {
-                //from 슬롯에 tmp 슬롯을 넣어 준다
-                from.AddItems(tmpTo);
+                //tmp 슬롯에 to슬롯을 넣어준다.
+                Stack<Item> tmpTo = new Stack<Item>(to.Items);
+                //to 슬롯에 from을 넣어 준다
+                to.AddItems(from.Items);
+                //tmpTo가 0이면
+                if (tmpTo.Count == 0)
+                {
+                    from.ClearSlot();
+                }
+                else
+                {
+                    //from 슬롯에 tmp 슬롯을 넣어 준다
+                    from.AddItems(tmpTo);
+                }
             }
+            ////
 
             from.GetComponent<Image>().color = Color.white;
             //to from을 비워 준다
@@ -358,6 +390,19 @@ public class Inventory : MonoBehaviour
             from.GetComponent<Image>().color = Color.white;
             from = null;
         }
+        else if (!movingSlot.IsEmpty)
+        {
+            Destroy(GameObject.Find("Hover"));
+
+            foreach (Item item in movingSlot.Items)
+            {
+                clicked.GetComponent<Slot>().AddItem(item);
+            }
+
+            movingSlot.ClearSlot();
+        }
+
+        selectStackSize.SetActive(false);
     }
 
     public void SetStackInfo(int maxStackCount)
@@ -410,6 +455,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             destination.AddItem(source.RemoveItem());
+            hoverObject.transform.GetChild(0).GetComponent<Text>().text = movingSlot.Items.Count.ToString();
         }
 
         if (source.Items.Count == 0)

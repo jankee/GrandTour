@@ -139,7 +139,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    //클리어 슬롯 함수
+    //클리어 샷 슬롯 함수
     public void ClearSlot()
     {
         //items를 클리어 한다
