@@ -1,0 +1,16 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class MoveTrail : MonoBehaviour
+{
+
+    public int moveSpeed = 230;
+
+    // Update is called once per frame
+    void Update()
+    {
+        this.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
+
+        Destroy(this.gameObject, 1f);
+    }
+}

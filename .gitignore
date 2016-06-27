@@ -3,18 +3,27 @@
 # =============== #
 <<<<<<< HEAD
 EffectTest/
+===================
 GrandTour/Temp/
 GrandTour/Library/
 GrandTour/obj/
-=======
-
+===================
 ShooterNet/Temp/
 ShooterNet/Library/
 ShooterNet/obj/
-
+====================
 TankPvP/Temp/
 TankPvP/Library/
 TankPvP/obj/
+===================
+2DRacingGame/Temp/
+2DRacingGame/Library/
+2DRacingGame/obj/
+=========================
+TheOldManAndTheSky/Temp/
+TheOldManAndTheSky/Library/
+TheOldManAndTheSky/obj/
+
 
 
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
@@ -37,6 +46,16 @@ TankPvP/*.csproj
 *.pidb
 *.suo
 TankPvP/*.sln
+
+2DRacingGame/*.csproj
+*.pidb
+*.suo
+2DRacingGame/*.sln
+
+TheOldManAndTheSky/*.csproj
+*.pidb
+*.suo
+TheOldManAndTheSky/*.sln
 
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
 

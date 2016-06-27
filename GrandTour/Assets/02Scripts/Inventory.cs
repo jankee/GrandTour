@@ -195,8 +195,6 @@ public class Inventory : MonoBehaviour
                 allSlots.Add(newSlot);
             }
         }
-
-        print(allSlots.Count);
     }
     
     //item maxSize을 체크 하는 함수
@@ -247,6 +245,8 @@ public class Inventory : MonoBehaviour
     private void MoveInventory()
     {
         Vector2 mousePos;
+
+        print(inventoryRect.sizeDelta.y / 2 * canvas.scaleFactor + " 인벤토리 렉트 : " + inventoryRect.sizeDelta.y  / 2);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, new Vector3(Input.mousePosition.x 
             - (inventoryRect.sizeDelta.x / 2 * canvas.scaleFactor), Input.mousePosition.y - (inventoryRect.sizeDelta.y / 2 * canvas.scaleFactor)), canvas.worldCamera, out mousePos);
