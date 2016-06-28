@@ -162,9 +162,6 @@ public class SpriteAnimation : MonoBehaviour
 
         frameSize = new Vector2(1f / colums, 1f / rows);
 
-        print(framePosition.x / colums);
-        print(1f - (framePosition.y / rows));
-
         frameOffset = new Vector2(framePosition.x / colums, 1f - (framePosition.y / rows));
 
         myRenderer.material.SetTextureScale("_MainTex", frameSize);

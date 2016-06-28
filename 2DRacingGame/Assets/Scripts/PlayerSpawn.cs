@@ -27,5 +27,28 @@ public class PlayerSpawn : MonoBehaviour
         {
             respawnTimer -= Time.deltaTime;
         }
+
+        if (respawnTimer <= 0f)
+        {
+            this.transform.position = currentTrackPosition;
+            respawnTimer = resetRespawnTimer;
+            activeRespawnTimer = false;
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.tag == "CheckPoint")
+        {
+            currentTrackPosition = other.transform.position;
+
+            print("Hi");
+        }
+
+        if (other.tag == "DeadZone")
+        {
+            activeRespawnTimer = true;
+        }
     }
 }
