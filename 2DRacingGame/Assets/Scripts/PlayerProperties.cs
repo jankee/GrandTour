@@ -59,8 +59,38 @@ public class PlayerProperties : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 cloneProjectile = (GameObject)Instantiate(projectile, projectileSocket.transform.position, transform.rotation);
-                Rigidbody cloneRigi = cloneProjectile.GetComponent<Rigidbody>();
-                cloneRigi.AddRelativeForce(fireProjectile);
+                Rigidbody cloneProjectileRigi = cloneProjectile.GetComponent<Rigidbody>();
+                cloneProjectileRigi.AddRelativeForce(fireProjectile);
+
+                playerState = PlayerState.CarNormal;
+                changeState = true;
+            }
+        }
+
+        if (hasTrap)
+        {
+            GameObject cloneTrap;
+            Vector3 fireTrap = transform.forward;
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                cloneTrap = (GameObject)Instantiate(trap, trapSocket.transform.position, transform.rotation);
+                Rigidbody cloneTrapRigi = cloneTrap.GetComponent<Rigidbody>();
+                cloneTrapRigi.AddRelativeForce(fireTrap);
+
+                playerState = PlayerState.CarNormal;
+                changeState = true;
+            }
+        }
+
+        if (hasBoost)
+        {
+            GameObject cloneBoost;
+            Vector3 fireBoost = transform.forward;
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                cloneBoost = (GameObject)Instantiate(boost, trapSocket.transform.position, transform.rotation);
 
                 playerState = PlayerState.CarNormal;
                 changeState = true;

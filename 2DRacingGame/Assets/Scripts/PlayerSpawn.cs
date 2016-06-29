@@ -43,7 +43,6 @@ public class PlayerSpawn : MonoBehaviour
         {
             currentTrackPosition = other.transform.position;
 
-            print("Hi");
         }
 
         if (other.tag == "DeadZone")
