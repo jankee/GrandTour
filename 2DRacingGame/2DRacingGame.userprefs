@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="2DRacingGame.CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\InventorySystem\Scripts\Modules\Crafting\CraftingWindowStandardUI.cs">
+    <Files>
+      <File FileName="Assets\InventorySystem\Scripts\Modules\Crafting\CraftingWindowStandardUI.cs" Line="292" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
