@@ -23,6 +23,10 @@ TankPvP/obj/
 TheOldManAndTheSky/Temp/
 TheOldManAndTheSky/Library/
 TheOldManAndTheSky/obj/
+=========================
+CreateRPG/Temp/
+CreateRPG/Library/
+CreateRPG/obj/
 
 
 
@@ -56,6 +60,11 @@ TheOldManAndTheSky/*.csproj
 *.pidb
 *.suo
 TheOldManAndTheSky/*.sln
+
+CreateRPG/*.csproj
+*.pidb
+*.suo
+CreateRPG/*.sln
 
 >>>>>>> cc2667ef907417e8db735f014988e834f1d105ad
 
